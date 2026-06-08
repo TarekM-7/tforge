@@ -28,9 +28,10 @@ try{
   console.log(e)
 }
 
-const mainContent = `
-//entry point
-`;
+
+const mainContent = fs.readFileSync(path.join("templates","index.js"), 'utf8')
+
+
 
 const cssContent = `
 body {
