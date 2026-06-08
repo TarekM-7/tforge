@@ -29,19 +29,9 @@ try{
 }
 
 
-const mainContent = fs.readFileSync(path.join("templates","index.js"), 'utf8')
-
-
-
-const cssContent = `
-body {
-    background-color: green;
-}
-`;
-
-const jsContent = `
-console.log('Project is running')
-`;
+const mainContent = fs.readFileSync(path.join(__dirname, '..', 'templates', 'index.js'), 'utf8')
+const cssContent = fs.readFileSync(path.join(__dirname, '..', 'templates', 'styles.css'), 'utf8')
+const jsContent = fs.readFileSync(path.join(__dirname, '..', 'templates', 'app.js'), 'utf8')
 
 try{
     const mainPath = path.join(projectName, "index.js")
