@@ -15,20 +15,21 @@ if (fs.existsSync(projectName)) {
 }
 fs.mkdirSync(projectName)
 
-const htmlContent = `
-<!doctype html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>${projectName}</title>
-    <link rel="stylesheet" href="styles.css" />
-  </head>
-  <body>
-    <h1>${projectName}</h1>
-    <script src="app.js"></script>
-  </body>
-</html>
+try{
+  fs.mkdirSync(path.join(projectName,'views'))
+  fs.mkdirSync(path.join(projectName,'public'))
+  fs.mkdirSync(path.join(projectName,'public/js'))
+  fs.mkdirSync(path.join(projectName,'public/css'))
+  fs.mkdirSync(path.join(projectName,'utils'))
+  fs.mkdirSync(path.join(projectName,'seeds'))
+  fs.mkdirSync(path.join(projectName,'routes'))
+  fs.mkdirSync(path.join(projectName,'models'))
+}catch(e){
+  console.log(e)
+}
+
+const mainContent = `
+//entry point
 `;
 
 const cssContent = `
@@ -42,11 +43,11 @@ console.log('Project is running')
 `;
 
 try{
-    const htmlPath = path.join(projectName, "index.html")
-    const jsPath = path.join(projectName, "app.js")
-    const cssPath = path.join(projectName, "styles.css")
-    fs.writeFileSync(htmlPath, htmlContent)
-    console.log('index.html: Ready')
+    const mainPath = path.join(projectName, "index.js")
+    const jsPath = path.join(projectName, "public", "js", "app.js")
+    const cssPath = path.join(projectName, "public", "css", "styles.css")
+    fs.writeFileSync(mainPath, mainContent)
+    console.log('index.js: Ready')
     fs.writeFileSync(jsPath, jsContent)
     console.log('app.js: Ready')
     fs.writeFileSync(cssPath, cssContent)
@@ -59,4 +60,4 @@ try{
 
 
 console.log('Done! Your project is ready')
-console.log(`  cd ${projectName} and open index.html`)
+console.log(`  cd ${projectName}`)
