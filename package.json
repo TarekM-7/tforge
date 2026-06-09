@@ -3,13 +3,16 @@
   "version": "1.0.0",
   "description": "",
   "bin": {
-  "tforge": "./bin/tforge.js"
-},
+    "tforge": "./bin/tforge.js"
+  },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
-  "type": "commonjs"
+  "type": "commonjs",
+  "dependencies": {
+    "chalk": "^4.1.2"
+  }
 }

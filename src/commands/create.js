@@ -18,8 +18,12 @@ function createProject(projectName){
         const content = fs.readFileSync(path.join(__dirname, '..', 'templates', fileName), 'utf8');
         fs.writeFileSync(path.join(projectName, fileName), content);
     }
-    createFile('index.js')
-    logger.success('Main index.html file')
+    for(let file of ['index.js', 'app.js', 'styles.css']){
+        createFile(file);
+        logger.success(file);
+    }
+    
+    logger.info('Project Created');
 }
 
 // try{
