@@ -4,14 +4,22 @@ const logger = require('../utils/logger')
 
 function createProject(projectName){
     if (!projectName) {
-        console.log("Usage: tforge <project-name>")
-        process.exit(0)
+        console.log("Usage: tforge <project-name>");
+        process.exit(0);
     }
     if (fs.existsSync(projectName)) {
-        console.log(`Error: the directory ${projectName} already exists`)
+        console.log(`Error: the directory ${projectName} already exists`);
         process.exit(1);
     }
     fs.mkdirSync(projectName)
+    logger.success(`Folder: ${projectName}`);
+
+    function createFile(fileName) {
+        const content = fs.readFileSync(path.join(__dirname, '..', 'templates', fileName), 'utf8');
+        fs.writeFileSync(path.join(projectName, fileName), content);
+    }
+    createFile('index.js')
+    logger.success('Main index.html file')
 }
 
 // try{
