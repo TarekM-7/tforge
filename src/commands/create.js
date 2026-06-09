@@ -14,17 +14,24 @@ function createProject(projectName){
     fs.mkdirSync(projectName)
     logger.success(`Folder: ${projectName}`);
 
-    function createFile(fileName) {
+    fs.mkdirSync(path.join(projectName,'views'))
+    logger.success(`Folder: Views`);
+
+    function createFile(fileName, destination = '') {
         const content = fs.readFileSync(path.join(__dirname, '..', 'templates', fileName), 'utf8');
-        fs.writeFileSync(path.join(projectName, fileName), content);
+        fs.writeFileSync(path.join(projectName, destination, fileName), content);
+        
     }
-    for(let file of ['index.js', 'app.js', 'styles.css']){
+
+    for(let file of ['index.js', 'app.js', 'styles.css', 'index.ejs']){
         createFile(file);
         logger.success(file);
     }
     
     logger.info('Project Created');
 }
+
+module.exports = createProject;
 
 // try{
 //   fs.mkdirSync(path.join(projectName,'views'))
@@ -63,5 +70,3 @@ function createProject(projectName){
 
 // console.log('Done! Your project is ready')
 // console.log(`  cd ${projectName}`)
-
-module.exports = createProject;
