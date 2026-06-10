@@ -18,7 +18,9 @@ function createProject(projectName){
     logger.success(`Folder: Views`);
 
     function createFile(fileName, destination = '') {
-        const content = fs.readFileSync(path.join(__dirname, '..', 'templates', fileName), 'utf8');
+        let content = fs.readFileSync(path.join(__dirname, '..', 'templates', fileName), 'utf8');
+        console.log(content)
+        content = content.replaceAll('{{ projectName }}', projectName)
         fs.writeFileSync(path.join(projectName, destination, fileName), content);
         
     }
