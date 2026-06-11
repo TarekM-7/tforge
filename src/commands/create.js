@@ -17,58 +17,30 @@ function createProject(projectName){
     fs.mkdirSync(path.join(projectName,'views'))
     logger.success(`Folder: Views`);
 
-    function createFile(fileName, destination = '') {
-        let content = fs.readFileSync(path.join(__dirname, '..', 'templates', fileName), 'utf8');
-        console.log(content)
-        content = content.replaceAll('{{ projectName }}', projectName)
-        fs.writeFileSync(path.join(projectName, destination, fileName), content);
-        
-    }
+    function copyTemplate(templatePath, targetPath) {
+    const entries = fs.readdirSync(templatePath, { withFileTypes: true });
 
-    for(let file of ['index.js', 'app.js', 'styles.css', 'index.ejs']){
-        createFile(file);
-        logger.success(file);
+    for (let entry of entries) {
+        const src = path.join(templatePath, entry.name);
+        const dest = path.join(targetPath, entry.name);
+
+        if (entry.isDirectory()) {
+            fs.mkdirSync(dest, { recursive: true });
+            copyTemplate(src, dest);
+        } else {
+            let content = fs.readFileSync(src, 'utf8');
+            content = content.replaceAll('{{projectName}}', projectName);
+            fs.writeFileSync(dest, content);
+        }
     }
+}
+
+    copyTemplate(
+    path.join(__dirname, '..', 'templates', 'base'),
+    projectName
+)
     
     logger.info('Project Created');
 }
 
 module.exports = createProject;
-
-// try{
-//   fs.mkdirSync(path.join(projectName,'views'))
-//   fs.mkdirSync(path.join(projectName,'public'))
-//   fs.mkdirSync(path.join(projectName,'public/js'))
-//   fs.mkdirSync(path.join(projectName,'public/css'))
-//   fs.mkdirSync(path.join(projectName,'utils'))
-//   fs.mkdirSync(path.join(projectName,'seeds'))
-//   fs.mkdirSync(path.join(projectName,'routes'))
-//   fs.mkdirSync(path.join(projectName,'models'))
-// }catch(e){
-//   console.log(e)
-// }
-
-
-// const mainContent = fs.readFileSync(path.join(__dirname, '..', 'templates', 'index.js'), 'utf8')
-// const cssContent = fs.readFileSync(path.join(__dirname, '..', 'templates', 'styles.css'), 'utf8')
-// const jsContent = fs.readFileSync(path.join(__dirname, '..', 'templates', 'app.js'), 'utf8')
-
-// try{
-//     const mainPath = path.join(projectName, "index.js")
-//     const jsPath = path.join(projectName, "public", "js", "app.js")
-//     const cssPath = path.join(projectName, "public", "css", "styles.css")
-//     fs.writeFileSync(mainPath, mainContent)
-//     logger.succes('index.js')
-//     fs.writeFileSync(jsPath, jsContent)
-//     logger.succes('app.js')
-//     fs.writeFileSync(cssPath, cssContent)
-//     logger.succes('styles.css')
-// } catch(e) {
-//     console.log(e)
-//     process.exit(1)
-// }
-
-
-
-// console.log('Done! Your project is ready')
-// console.log(`  cd ${projectName}`)
