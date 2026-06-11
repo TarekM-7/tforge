@@ -29,7 +29,7 @@ function createProject(projectName){
             copyTemplate(src, dest);
         } else {
             let content = fs.readFileSync(src, 'utf8');
-            content = content.replaceAll('{{projectName}}', projectName);
+            content = content.replaceAll('{{ projectName }}', projectName);
             fs.writeFileSync(dest, content);
         }
     }
