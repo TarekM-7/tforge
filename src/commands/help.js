@@ -5,13 +5,19 @@ const logger = require('../utils/logger')
 function helpCommand(){
     logger.info(
         `
-        tforge — project scaffolding by Tarek Mariscal
+Usage: tforge <project-name>
 
-        Usage:
-        tforge <project-name>
+Description:
+  CLI scaffolding tool that generates Express, Mongoose and EJS project.
 
-        Example:
-        tforge my-app
+Options:
+  -h, --help                 Display this help message and exit
+
+Commands:
+ -In process
+
+Use "tforge --help" for more information about a specific command.
+
         `
     )
 }
