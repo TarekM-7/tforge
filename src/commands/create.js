@@ -1,6 +1,8 @@
 const fs = require('fs');
 const path = require("path")
 const logger = require('../utils/logger')
+const { execSync } = require('child_process')
+
 
 function createProject(projectName){
     if (!projectName) {
@@ -39,7 +41,10 @@ function createProject(projectName){
     path.join(__dirname, '..', 'templates', 'base'),
     projectName
 )
-    
+    logger.info('Installing dependencies...')
+    execSync('npm install', { cwd: projectName })
+    logger.success('Dependencies installed')
+
     logger.info('Project Created');
 }
 
