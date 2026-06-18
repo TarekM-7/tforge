@@ -45,6 +45,11 @@ function createProject(projectName){
     execSync('npm install', { cwd: projectName })
     logger.success('Dependencies installed')
 
+    logger.info('Initialising git...')
+    execSync('git init', { cwd: projectName })
+    logger.success('Git initialized')
+
+
     logger.info('Project Created');
 }
 
