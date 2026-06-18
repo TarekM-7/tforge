@@ -2,6 +2,7 @@ const fs = require('fs');
 const path = require("path")
 const logger = require('../utils/logger')
 const { execSync } = require('child_process')
+const ora = require('ora');
 
 
 function createProject(projectName){
@@ -41,13 +42,16 @@ function createProject(projectName){
     path.join(__dirname, '..', 'templates', 'base'),
     projectName
 )
-    logger.info('Installing dependencies...')
-    execSync('npm install', { cwd: projectName })
-    logger.success('Dependencies installed')
+    const spinner = ora({
+    text: 'Installing dependencies...',
+    spinner: 'dots2'
+    }).start();
+    execSync('npm install', { cwd: projectName, stdio: 'ignore' })
+    spinner.succeed('Dependencies installed')
 
-    logger.info('Initialising git...')
-    execSync('git init', { cwd: projectName })
-    logger.success('Git initialized')
+    spinner.start('Initialising git...');
+    execSync('git init', { cwd: projectName, stdio: 'ignore' })
+    spinner.succeed('Git initialized')
 
 
     logger.info('Project Created');
