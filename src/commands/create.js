@@ -3,9 +3,10 @@ const path = require("path")
 const logger = require('../utils/logger')
 const { execSync } = require('child_process')
 const ora = require('ora');
+const inquirer = require('inquirer')
 
 
-function createProject(projectName){
+async function createProject(projectName) {
     if (!projectName) {
         console.log("Usage: tforge <project-name>");
         process.exit(0);
@@ -42,17 +43,38 @@ function createProject(projectName){
     path.join(__dirname, '..', 'templates', 'base'),
     projectName
 )
-    const spinner = ora({
-    text: 'Installing dependencies...',
-    spinner: 'dots2'
-    }).start();
-    execSync('npm install', { cwd: projectName, stdio: 'ignore' })
-    spinner.succeed('Dependencies installed')
 
-    spinner.start('Initialising git...');
-    execSync('git init', { cwd: projectName, stdio: 'ignore' })
-    spinner.succeed('Git initialized')
+    const answers = await inquirer.prompt([
+        {
+            type: 'confirm',
+            name: 'installPackages',
+            message: 'Do you want to download/install packages?',
+            default: true,
+        },
+        {
+            type: 'confirm',
+            name: 'initGit',
+            message: 'Do you want to initialize Git?',
+            default: true,
+        },
+    ]);
 
+    if(answers.installPackages){
+        const spinner = ora({
+            text: 'Installing dependencies...',
+            spinner: 'dots2'
+        }).start();
+        execSync('npm install', { cwd: projectName, stdio: 'ignore' })
+        spinner.succeed('Dependencies installed')
+    }
+    if(answers.initGit){
+        const spinner = ora({
+            text: 'Initialising git...',
+            spinner: 'dots2'
+        }).start();
+        execSync('git init', { cwd: projectName, stdio: 'ignore' })
+        spinner.succeed('Git initialized');
+    }
 
     logger.info('Project Created');
 }
