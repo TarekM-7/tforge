@@ -14,7 +14,9 @@ Options:
   -h, --help                 Display this help message and exit
 
 Commands:
- -In process
+  -tforge <project-name>     Create a new project
+  -tforge list               Show available templates
+  -tforge --help, -h         Display this help message
 
 Use "tforge --help" for more information about a specific command.
 
