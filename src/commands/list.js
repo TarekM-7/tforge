@@ -3,19 +3,20 @@ const path = require("path")
 const logger = require('../utils/logger')
 
 function getTemplates(){
-    const files = fs.readdirSync(folderPath)
-    logger.info(files)
+    const folders = fs.readdirSync(path.join(__dirname, '..', 'templates'));
+    return folders;
 }
 
 function listCommand(){
-    // getTemplates()
+    const templates = getTemplates()
     logger.info(
         `
 Available templates:
-
--base
         `
     )
+    for(const template of templates){
+        logger.info(`-${template}`)
+    }
 }
 
 module.exports = listCommand;
